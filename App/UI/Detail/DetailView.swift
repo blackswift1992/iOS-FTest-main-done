@@ -20,12 +20,24 @@ class DetailView: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+}
+
+
+//MARK: - Public methods
+
+
+extension DetailView {
     func addItems(_ items: [String]) {
         self.items = items
     }
-    
-    private func createUILabels() {
+}
+
+
+//MARK: - Private methods
+
+
+private extension DetailView {
+    func createUILabels() {
         guard let items = items else { return }
         
         var labelFrame = CGRect(x: 20, y: 20, width: self.frame.width - 40, height: 50)
@@ -44,3 +56,4 @@ class DetailView: UIView {
         }
     }
 }
+

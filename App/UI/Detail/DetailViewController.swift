@@ -11,7 +11,7 @@ import GlobalUI
 class DetailViewController: UIViewController {
     private var viewModel: DetailViewModel
     
-    let contentView = DetailView.useConstraint
+    private let contentView = DetailView.useConstraint
     private let tableView = UITableView.useConstraint
 
     public init(viewModel: DetailViewModel) {
@@ -25,18 +25,31 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        addSubviews()
+        configure()
+        setupLayout()
     }
-    
-    private func setup() {
+}
+
+
+//MARK: - Setup methods
+
+
+private extension DetailViewController {
+    func configure() {
         navigationController?.navigationBar.tintColor = .white
         title = "Details"
         view.layer.backgroundColor = GlobalColor.backgroundColor?.cgColor
         
         contentView.frame = view.bounds
-        contentView.addItems(viewModel.forecastItemData)
+        contentView.addItems(viewModel.getForecastItemData())
+    }
+    
+    func addSubviews() {
         view.addSubview(contentView)
-
+    }
+    
+    func setupLayout() {
         NSLayoutConstraint.activate([
             contentView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100)
         ])

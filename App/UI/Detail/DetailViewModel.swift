@@ -7,16 +7,31 @@
 import Foundation
 
 class DetailViewModel {
-    var forecastItemData = [String]()
+    private var forecastItemData = [String]()
     
     init(forecastItem: ForecastItem) {
-        extractItemsFrom(forecastItem: forecastItem)
+        extractDataFrom(forecastItem: forecastItem)
     }
-    
-    private func extractItemsFrom(forecastItem: ForecastItem) {
+}
+
+
+//MARK: - Public methods
+
+
+extension DetailViewModel {
+    func getForecastItemData() -> [String] {
+        forecastItemData
+    }
+}
+
+
+//MARK: - Private methods
+
+
+private extension DetailViewModel {
+    func extractDataFrom(forecastItem: ForecastItem) {
         forecastItemData.append("Day: \(forecastItem.day)")
         forecastItemData.append("Description: \(forecastItem.description)")
         forecastItemData.append("ChanceRain: \(forecastItem.chanceRain)")
     }
 }
-
