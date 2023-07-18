@@ -7,10 +7,16 @@
 import UIKit
 
 class ListViewCoordinator {
-    weak var navigationController: UINavigationController?
+    private weak var navigationController: UINavigationController?
     private weak var viewController: ListViewController?
+}
 
-    public func start(window: UIWindow) {
+
+//MARK: - Public methods
+
+
+extension ListViewCoordinator {
+    func start(window: UIWindow) {
         let viewModel = ListViewModel(coordinator: self)
         
         let viewController = ListViewController(viewModel: viewModel)

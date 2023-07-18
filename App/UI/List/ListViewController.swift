@@ -28,34 +28,11 @@ class ListViewController: UIViewController {
         configure()
         setupLayout()
     }
-
-    private func addSubviews() {
-        view.addSubview(tableView)
-    }
-
-    private func configure() {
-        tableView.register(ListCell.self, forCellReuseIdentifier: "\(ListCell.self)")
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.backgroundColor = GlobalColor.backgroundColor
-        self.title = viewModel.title
-        tableView.rowHeight = 80
-        
-        viewModel.itemsAdded = { [weak self] in
-            self?.tableView.reloadData()
-        }
-    }
-
-    private func setupLayout() {
-        NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor .constraint(equalTo: view.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        ])
-        navigationController?.navigationBar.prefersLargeTitles = false
-    }
 }
+
+
+//MARK: - UITableView Delegate/DataSource
+
 
 extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -72,13 +49,14 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.coordinator?.goToDetailsView(forecastItem: viewModel.getItems()[indexPath.row])
+        viewModel.goToDetailsView(itemIndex: indexPath.row)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
 
-//MARK: - SwipeTableViewCell
+//MARK: - TableViewCellSwiping
+
 
 extension ListViewController {
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -94,12 +72,51 @@ extension ListViewController {
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         return configuration
     }
-    
-    private func deleteItem(at indexPath: IndexPath) {
+}
+
+
+//MARK: - Private methods
+
+
+private extension ListViewController {
+    func deleteItem(at indexPath: IndexPath) {
         viewModel.removeItem(at: indexPath.row)
         
         tableView.performBatchUpdates {
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
+    }
+}
+
+
+//MARK: - Setup methods
+
+
+private extension ListViewController {
+    func addSubviews() {
+        view.addSubview(tableView)
+    }
+
+    func configure() {
+        tableView.register(ListCell.self, forCellReuseIdentifier: "\(ListCell.self)")
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.backgroundColor = GlobalColor.backgroundColor
+        self.title = viewModel.getTitle()
+        tableView.rowHeight = 80
+        
+        viewModel.setItemsAdded() { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
+
+    func setupLayout() {
+        NSLayoutConstraint.activate([
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor .constraint(equalTo: view.trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+        navigationController?.navigationBar.prefersLargeTitles = false
     }
 }

@@ -18,3 +18,5 @@ public class AppModule: Module {
         GlobalContainer.defaultContainer.register(ForecastService.self) { _ in ForecastServiceImpl() }
     }
 }
+
+

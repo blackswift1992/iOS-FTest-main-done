@@ -9,15 +9,15 @@ import GlobalUI
 import Combine
 
 class ListViewModel {
-    var coordinator: ListViewCoordinator?
-    @Inject var service: ForecastService
+    private var coordinator: ListViewCoordinator?
+    @Inject private var service: ForecastService
     
     private var bag = Set<AnyCancellable>()
+    
+    private var title: String = Bundle.main.infoDictionary?[kCFBundleNameKey as String] as! String
     private var items: ForecastItems = []
-    var itemsAdded: (() -> Void)?
-
-    var title: String = Bundle.main.infoDictionary?[kCFBundleNameKey as String] as! String
-
+    private var itemsAdded: (() -> Void)?
+    
     init(coordinator: ListViewCoordinator?) {
         service.items
             .receive(on: DispatchQueue.main)
@@ -29,6 +29,19 @@ class ListViewModel {
         
         self.coordinator = coordinator
     }
+}
+
+
+//MARK: - Public methods
+
+extension ListViewModel {
+    func getTitle() -> String {
+        title
+    }
+    
+    func setItemsAdded(_ closure: (() -> Void)?) {
+        itemsAdded = closure
+    }
     
     func removeItem(at index: Int) {
         items.remove(at: index)
@@ -36,5 +49,9 @@ class ListViewModel {
     
     func getItems() -> ForecastItems {
        items
+    }
+    
+    func goToDetailsView(itemIndex: Int) {
+        coordinator?.goToDetailsView(forecastItem: items[itemIndex])
     }
 }

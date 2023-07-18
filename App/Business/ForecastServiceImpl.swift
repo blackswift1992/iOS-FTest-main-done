@@ -10,7 +10,7 @@ import Combine
 import Global
 
 class ForecastServiceImpl: ForecastService {
-    @Inject var networkService: ForecastNetworkService
+    @Inject private var networkService: ForecastNetworkService
     private var itemsSubject = CurrentValueSubject<ForecastItems, Never>(ForecastItems())
     
     var items: CurrentValueSubject<ForecastItems, Never> { itemsSubject }
@@ -26,7 +26,13 @@ class ForecastServiceImpl: ForecastService {
             })
             .store(in: &bag)
     }
-    
+}
+
+
+//MARK: - Private methods
+
+
+private extension ForecastServiceImpl {
     func updateForecastItems(newItems: ForecastItems) {
         itemsSubject.send(newItems)
     }
