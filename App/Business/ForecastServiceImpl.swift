@@ -22,11 +22,7 @@ class ForecastServiceImpl: ForecastService {
     init() {
         networkService.getForecast()
             .sink(receiveCompletion: { _ in }, receiveValue: {[weak self] value in
-                var forecastItems = ForecastItems()
-                
-                value.forEach {
-                    forecastItems.append(ForecastItem(day: $0.day, description: $0.description, chanceRain: $0.chanceRain))
-                }
+                let forecastItems = value.map({ ForecastItem(day: $0.day, description: $0.description, chanceRain: $0.chanceRain) })
                 
                 self?.updateForecastItems(newItems: forecastItems)
             })
