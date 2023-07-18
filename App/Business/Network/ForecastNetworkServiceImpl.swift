@@ -22,7 +22,5 @@ class ForecastNetworkServiceImpl: ForecastNetworkService {
                 }
             .decode(type: [ForecastItemDTO].self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
-        
-        
     }
 }

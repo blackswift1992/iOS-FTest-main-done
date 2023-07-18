@@ -10,6 +10,7 @@ import Combine
 import Global
 
 class ForecastServiceImpl: ForecastService {
+    @Inject var networkService: ForecastNetworkService
     private var itemsSubject = CurrentValueSubject<ForecastItems, Never>(ForecastItems())
 
     var items: CurrentValueSubject<ForecastItems, Never> {
@@ -19,7 +20,7 @@ class ForecastServiceImpl: ForecastService {
     private var bag = Set<AnyCancellable>()
     
     init() {
-        GlobalContainer.defaultContainer.resolve(ForecastNetworkService.self)?.getForecast()
+        networkService.getForecast()
             .sink(receiveCompletion: { _ in }, receiveValue: {[weak self] value in
                 var forecastItems = ForecastItems()
                 
