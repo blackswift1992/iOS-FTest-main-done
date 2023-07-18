@@ -7,6 +7,12 @@
 import UIKit
 
 class DetailView: UIView {
+    private var items: [String]? {
+        didSet {
+            createUILabels()
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -15,7 +21,13 @@ class DetailView: UIView {
         super.init(coder: coder)
     }
     
-    func internalInit(items: [String]) {
+    func addItems(_ items: [String]) {
+        self.items = items
+    }
+    
+    private func createUILabels() {
+        guard let items = items else { return }
+        
         var labelFrame = CGRect(x: 20, y: 20, width: self.frame.width - 40, height: 50)
 
         for i in 0..<items.count {

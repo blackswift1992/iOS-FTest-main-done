@@ -26,7 +26,6 @@ class ListViewCoordinator {
     func goToDetailsView(forecastItem: ForecastItem) {
         guard let navigationController = navigationController else { return }
         
-        let detailViewCoordinator = DetailViewCoordinator()
-        detailViewCoordinator.start(navigationController: navigationController, forecastItem: forecastItem)
+        DetailViewCoordinator().start(navigationController: navigationController, forecastItem: forecastItem)
     }
 }

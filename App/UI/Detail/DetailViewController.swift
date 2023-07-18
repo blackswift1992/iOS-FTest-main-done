@@ -31,7 +31,7 @@ class DetailViewController: UIViewController {
         view.layer.backgroundColor = GlobalColor.backgroundColor?.cgColor
         
         let subView = DetailView(frame: view.bounds)
-        subView.internalInit(items: viewModel.forecastItemData)
+        subView.addItems(viewModel.forecastItemData)
         view.addSubview(subView)
         subView.translatesAutoresizingMaskIntoConstraints = false
 
