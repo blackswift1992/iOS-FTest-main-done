@@ -6,10 +6,8 @@
 
 import GlobalUI
 import UIKit
-import SwipeCellKit
 
-class ListCell: SwipeTableViewCell {
-
+class ListCell: UITableViewCell {
     private let label = UILabel.useConstraint
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -19,7 +17,7 @@ class ListCell: SwipeTableViewCell {
         configure()
         setupLayout()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -27,11 +25,11 @@ class ListCell: SwipeTableViewCell {
     func addSubviews() {
         contentView.addSubview(label)
     }
-
+    
     func configure() {
         label.textColor = .white
     }
-
+    
     func setupLayout() {
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),

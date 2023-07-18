@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4904613D2A654C5800AB806E /* ForecastServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4904613C2A654C5800AB806E /* ForecastServiceImpl.swift */; };
-		490461402A659BAA00AB806E /* SwipeCellKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4904613F2A659BAA00AB806E /* SwipeCellKit */; };
 		4A925F28280582DD0021096B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4ADACE4C28041D6800706AD5 /* Assets.xcassets */; };
 		4AA546D72804269400BCE871 /* TableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA546D42804269400BCE871 /* TableViewDelegate.swift */; };
 		4AA546D82804269400BCE871 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA546D52804269400BCE871 /* TableView.swift */; };
@@ -155,7 +154,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4ADACEC1280424FB00706AD5 /* GlobalUI.framework in Frameworks */,
-				490461402A659BAA00AB806E /* SwipeCellKit in Frameworks */,
 				4ADACE942804233500706AD5 /* Global.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -401,7 +399,6 @@
 			);
 			name = App;
 			packageProductDependencies = (
-				4904613F2A659BAA00AB806E /* SwipeCellKit */,
 			);
 			productName = weather;
 			productReference = 4ADACE3D28041D6800706AD5 /* App.app */;
@@ -480,7 +477,6 @@
 			mainGroup = 4ADACE3428041D6800706AD5;
 			packageReferences = (
 				4ADACEA1280424A600706AD5 /* XCRemoteSwiftPackageReference "Swinject" */,
-				4904613E2A659BAA00AB806E /* XCRemoteSwiftPackageReference "SwipeCellKit" */,
 			);
 			productRefGroup = 4ADACE3E28041D6800706AD5 /* Products */;
 			projectDirPath = "";
@@ -943,14 +939,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4904613E2A659BAA00AB806E /* XCRemoteSwiftPackageReference "SwipeCellKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwipeCellKit/SwipeCellKit";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
 		4ADACEA1280424A600706AD5 /* XCRemoteSwiftPackageReference "Swinject" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Swinject/Swinject";
@@ -962,11 +950,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4904613F2A659BAA00AB806E /* SwipeCellKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4904613E2A659BAA00AB806E /* XCRemoteSwiftPackageReference "SwipeCellKit" */;
-			productName = SwipeCellKit;
-		};
 		4ADACEA5280424C000706AD5 /* Swinject */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4ADACEA1280424A600706AD5 /* XCRemoteSwiftPackageReference "Swinject" */;

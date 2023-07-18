@@ -7,7 +7,6 @@
 import UIKit
 import Combine
 import GlobalUI
-import SwipeCellKit
 
 class ListViewController: UIViewController {
     private var viewModel: ListViewModel
@@ -65,10 +64,6 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "\(ListCell.self)", for: indexPath)
         
-        if let swipeCell = cell as? SwipeTableViewCell {
-            swipeCell.delegate = self
-        }
-        
         guard let listCell = cell as? ListCell else { return UITableViewCell() }
         
         let item = viewModel.items[indexPath.row]
@@ -85,23 +80,28 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 
-//MARK: - SwipeTableViewCellDelegate
+//MARK: - SwipeTableViewCell
 
-
-extension ListViewController: SwipeTableViewCellDelegate {
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
-        guard orientation == .right else { return nil }
-
-        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { [weak self] action, indexPath in
-            self?.viewModel.items.remove(at: indexPath.row)
-        }
-
-        return [deleteAction]
+extension ListViewController {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        true
     }
     
-    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
-        var options = SwipeOptions()
-        options.expansionStyle = .destructive
-        return options
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction =  UIContextualAction(style: .destructive, title: "Delete") {
+            [weak self] (deleteAction, button, handler) in
+            self?.deleteItem(at: indexPath)
+        }
+        
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        return configuration
+    }
+    
+    private func deleteItem(at indexPath: IndexPath) {
+        viewModel.items.remove(at: indexPath.row)
+        
+        tableView.performBatchUpdates {
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
     }
 }
