@@ -25,18 +25,20 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // TODO: add content view as subview
+        setup()
+    }
+    
+    private func setup() {
         navigationController?.navigationBar.tintColor = .white
         title = "Details"
         view.layer.backgroundColor = GlobalColor.backgroundColor?.cgColor
         
-        let subView = DetailView(frame: view.bounds)
-        subView.addItems(viewModel.forecastItemData)
-        view.addSubview(subView)
-        subView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.frame = view.bounds
+        contentView.addItems(viewModel.forecastItemData)
+        view.addSubview(contentView)
 
         NSLayoutConstraint.activate([
-        subView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100)
+            contentView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100)
         ])
     }
 }
