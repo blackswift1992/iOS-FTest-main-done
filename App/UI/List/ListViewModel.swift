@@ -11,13 +11,10 @@ import Combine
 class ListViewModel {
     var coordinator: ListViewCoordinator?
     @Inject var service: ForecastService
-    private var bag = Set<AnyCancellable>()
-
-    var items: [ForecastItem] = []
     
+    private var bag = Set<AnyCancellable>()
+    private var items: ForecastItems = []
     var itemsAdded: (() -> Void)?
-
-    var showDetail: ((ForecastItem) -> Void)?
 
     var title: String = Bundle.main.infoDictionary?[kCFBundleNameKey as String] as! String
 
@@ -31,5 +28,13 @@ class ListViewModel {
             .store(in: &bag)
         
         self.coordinator = coordinator
-    }  
+    }
+    
+    func removeItem(at index: Int) {
+        items.remove(at: index)
+    }
+    
+    func getItems() -> ForecastItems {
+       items
+    }
 }

@@ -10,6 +10,7 @@ import GlobalUI
 
 class ListViewController: UIViewController {
     private var viewModel: ListViewModel
+    
     private let tableView = UITableView.useConstraint
 
     public init(viewModel: ListViewModel) {
@@ -26,12 +27,6 @@ class ListViewController: UIViewController {
         addSubviews()
         configure()
         setupLayout()
-        self.title = viewModel.title
-        
-        tableView.rowHeight = 80
-        viewModel.itemsAdded = { [weak self] in
-            self?.tableView.reloadData()
-        }
     }
 
     private func addSubviews() {
@@ -43,6 +38,12 @@ class ListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = GlobalColor.backgroundColor
+        self.title = viewModel.title
+        tableView.rowHeight = 80
+        
+        viewModel.itemsAdded = { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
 
     private func setupLayout() {
@@ -58,23 +59,20 @@ class ListViewController: UIViewController {
 
 extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.items.count
+        return viewModel.getItems().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "\(ListCell.self)", for: indexPath)
-        
-        guard let listCell = cell as? ListCell else { return UITableViewCell() }
-        
-        let item = viewModel.items[indexPath.row]
-        
+        guard let listCell = tableView.dequeueReusableCell(withIdentifier: "\(ListCell.self)", for: indexPath) as? ListCell else { return UITableViewCell() }
+
+        let item = viewModel.getItems()[indexPath.row]
         listCell.textLabel?.text = "Day: \(item.day), description: \(item.description)"
 
         return listCell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.coordinator?.goToDetailsView(forecastItem: viewModel.items[indexPath.row])
+        viewModel.coordinator?.goToDetailsView(forecastItem: viewModel.getItems()[indexPath.row])
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
@@ -98,7 +96,7 @@ extension ListViewController {
     }
     
     private func deleteItem(at indexPath: IndexPath) {
-        viewModel.items.remove(at: indexPath.row)
+        viewModel.removeItem(at: indexPath.row)
         
         tableView.performBatchUpdates {
             tableView.deleteRows(at: [indexPath], with: .automatic)

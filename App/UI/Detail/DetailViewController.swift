@@ -9,9 +9,9 @@ import Combine
 import GlobalUI
 
 class DetailViewController: UIViewController {
-    let contentView = DetailView.useConstraint
-    
     private var viewModel: DetailViewModel
+    
+    let contentView = DetailView.useConstraint
     private let tableView = UITableView.useConstraint
 
     public init(viewModel: DetailViewModel) {

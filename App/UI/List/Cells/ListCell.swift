@@ -22,15 +22,15 @@ class ListCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func addSubviews() {
+    private func addSubviews() {
         contentView.addSubview(label)
     }
     
-    func configure() {
+    private func configure() {
         label.textColor = .white
     }
     
-    func setupLayout() {
+    private func setupLayout() {
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),

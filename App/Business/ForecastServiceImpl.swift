@@ -12,9 +12,9 @@ import Global
 class ForecastServiceImpl: ForecastService {
     @Inject var networkService: ForecastNetworkService
     private var itemsSubject = CurrentValueSubject<ForecastItems, Never>(ForecastItems())
-
+    
     var items: CurrentValueSubject<ForecastItems, Never> { itemsSubject }
-
+    
     private var bag = Set<AnyCancellable>()
     
     init() {

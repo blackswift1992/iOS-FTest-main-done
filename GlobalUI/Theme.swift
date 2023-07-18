@@ -8,7 +8,7 @@ import UIKit
 import Foundation
 
 public struct Theme {
-    /// Setup appearances for the application components.
+    // Setup appearances for the application components.
     public static func setup() {
         styleNavigationBar()
     }
